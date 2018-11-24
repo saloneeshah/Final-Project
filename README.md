@@ -10,13 +10,17 @@ DELETE these lines from TEMPLATE up.
 
 TEMPLATE for your report to fill out:
 
-# Title: 
+# Title: Goalkeeper Success Rate Simulation
 
-## Team Member(s):
-(Note: Don't put your email addresses here (which is public).  If a student wants their NAME hidden as well, due to optional FERPA regulations, they can be listed purely by their GitHub ID).
+## Team Member(s): Claire Wu|Salonee Shah|Samuel John
 
 # Monte Carlo Simulation Scenario & Purpose:
-(be sure to read the instructions given in course Moodle)
+The program would simulate the success percentage of a goalkeeper for using different strategies over a number of penalty attempts The game would be simulated based on various methods while using a dataset such as the penalty dataset here: https://www.kaggle.com/apopov41/exploring-penalty-kick-variables/data
+
+Each kick simulated would be a random row picked from the dataset and the direction of kick and leg used would be used in the program. The simulation conditions we are considering are: 
+•	Goalie jumps in a random direction for each opponent over a set number of runs 
+•	Goalie jumps in the direction the opponents most frequently shoot in for a set number of runs 
+•	Goalie considers the opponents' shot direction as well as the foot used for the shot (data obtained from the previous scenario) to determine which direction to jump in a set number of runs
 
 ## Simulation's variables of uncertainty
 List and describe your simulation's variables of uncertainty (where you're using pseudo-random number generation). For each such variable, how did you decide the range and probability distribution to use?  Do you think it's a good representation of reality?
