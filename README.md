@@ -9,8 +9,11 @@ The program would simulate the success percentage of a goalkeeper and the purpos
 The game would be simulated based on various methods while using a penalty dataset here: https://www.kaggle.com/apopov41/exploring-penalty-kick-variables/data
 
 Each kick simulated would be a random row picked from the dataset and the direction of kick and leg used would be used in the program. The simulation conditions we are considering are: 
+
 •	Goalie jumps in a random direction for each opponent over a set number of runs 
-•	Goalie jumps in the direction the opponents most frequently shoot in for a set number of runs 
+
+•	Goalie jumps in the direction the opponents most frequently shoot in for a set number of runs
+
 •	Goalie considers the opponents' shot direction as well as the foot used for the shot (data obtained from the previous scenario) to determine which direction to jump in a set number of runs
 
 ## Simulation's variables of uncertainty
