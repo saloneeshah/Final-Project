@@ -18,6 +18,7 @@ List and describe your simulation's variables of uncertainty (where you're using
 • Variable 1：kick_dir - this variable stands for the direction a striker kicks
 The range of the kicking direction is either left, middle or right. 
 
+
 • Variable 2: leg_test_striker - this variable stands for a list of a striker's foot used and kicking direction
 The range of this variable is either [left, left], [left, middle], [left, right], [right, left], [right, middle] or [right, right].
 
@@ -25,6 +26,7 @@ As the range of the variable is based on real dataset, we believe it's a good re
 
 ## Hypothesis or hypotheses before running the simulation:
 • If goalie's direction is the same as striker's direction, then the goalie wins
+
 • Strategic moves can increase the success percentage of a goalie
 
 ## Analytical Summary of your findings: (e.g. Did you adjust the scenario based on previous simulation outcomes?  What are the management decisions one could make from your simulation's output, etc.)
