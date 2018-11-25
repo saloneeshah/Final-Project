@@ -15,6 +15,7 @@ Each kick simulated would be a random row picked from the dataset and the direct
 
 ## Simulation's variables of uncertainty
 List and describe your simulation's variables of uncertainty (where you're using pseudo-random number generation). For each such variable, how did you decide the range and probability distribution to use?  Do you think it's a good representation of reality?
+
 • Variable 1：kick_dir - this variable stands for the direction a striker kicks
 The range of the kicking direction is either left, middle or right. 
 
