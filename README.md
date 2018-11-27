@@ -29,7 +29,7 @@ The range of this variable is either [left, left], [left, middle], [left, right]
 As the range of the variable is based on real dataset, we believe it's a good representation of reality. We'd assume a normal distribution(to be added)
 
 ## Hypothesis or hypotheses before running the simulation:
-• If goalie's direction is the same as striker's direction, then the goalie wins
+• If goalie's direction is the same as striker's direction, then the goalie wins(This is an assumption, not a hypotheses)
 
 • Strategic moves can increase the success percentage of a goalie
 
