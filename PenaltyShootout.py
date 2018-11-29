@@ -1,52 +1,114 @@
 import csv
-from random import choice
+from random import choice, randint
 from collections import Counter, defaultdict
 
 
 class Player:
-    player_count = 0
+    # player_count = 0
     team = []
     keeper = None
 
     def __init__(self, name=None):
-        Player.player_count += 1
+        # Player.player_count += 1
         if name != 'Goalie':
             Player.team.append(self)
         else:
             Player.keeper = self
         self.name = name
-        self.wins = 0
-        self.losses = 0
+        (self.wins_case1, self.wins_case2, self.wins_case3) = (0, 0, 0)
+        (self.losses_case1, self.losses_case2, self.losses_case3) = (0, 0, 0)
+        (self.count_r_total, self.count_l_total, self.count_m_total) = (0, 0, 0)
+        self.tendency = [0, 0, 0]
         self.choices = Counter()
 
-    def choose_direction(self):
-        # current code is only for scenario 1, will use self later
-        directions = ['Right', 'Left', 'Middle']
-        kick_dir = choice(directions)
-        return kick_dir
+    @staticmethod
+    def choose_direction_goalie(consider_direction, striker):
+        if not consider_direction:
+            directions = ['Right', 'Left', 'Middle']
+            jump_dir = choice(directions)
+            return jump_dir
+        else:
+            cnt = [striker.count_r_total, striker.count_l_total, striker.count_m_total]
+            direction_index = [i for i, e in enumerate(cnt) if e == max(cnt)]
+            if len(direction_index) == 1:
+                if direction_index == [0]:
+                    direction = 'Right'
+                elif direction_index == [1]:
+                    direction = 'Left'
+                else:
+                    direction = 'Middle'
+            elif len(direction_index) == 2:
+                if direction_index == [0, 1]:
+                    directions = ['Right', 'Left']
+                elif direction_index == [0, 2]:
+                    directions = ['Right', 'Middle']
+                elif direction_index == [1, 2]:
+                    directions = ['Left', 'Middle']
+                direction = choice(directions)
+            elif len(direction_index) > 2:
+                directions = ['Right', 'Left', 'Middle']
+                direction = choice(directions)
+            return direction
+
+    def choose_direction_striker(self, consider_direction):
+        if not consider_direction:
+            directions = ['Right', 'Left', 'Middle']
+            jump_dir = choice(directions)
+            if jump_dir == 'Right':
+                self.tendency[0] += 1
+            elif jump_dir == 'Left':
+                self.tendency[1] += 1
+            else:
+                self.tendency[2] += 1
+            return jump_dir
+        else:
+            n = randint(1, max(self.tendency))
+            if n <= self.tendency[0]:
+                return 'Right'
+            elif n <= self.tendency[0] + self.tendency[1]:
+                return 'Left'
+            else:
+                return 'Middle'
 
     @staticmethod
-    def record_play(gk: 'Player', gk_dir: str, opp_dir: str, winner: 'Player'):
+    def record_play(gk: 'Player', opponent: 'Player', opp_dir: str, winner: 'Player', consider_direction):
+        # record goalies wins and losses
         if winner == gk:
-            winner.wins += 1
+            if not consider_direction:
+                winner.wins_case1 += 1
+            else:
+                winner.wins_case2 += 1
         else:
-            winner.losses += 1
-        # have to add logic to record goalie and player dir for next scenario
+            if not consider_direction:
+                winner.losses_case1 += 1
+            else:
+                winner.losses_case2 += 1
 
-    def penalty_sim(self, striker, print_result=False):
+        # record players selected direction
+        if opp_dir == 'Right':
+            opponent.count_r_total += 1
+        elif opp_dir == 'Left':
+            opponent.count_l_total += 1
+        elif opp_dir == 'Middle':
+            opponent.count_m_total += 1
+
+    def penalty_sim(self, striker, print_result=False, consider_direction=False):
         # self = goalie, opponent = striker
-        goalie_direction = self.choose_direction()
-        striker_direction = striker.choose_direction()
+        goalie_direction = self.choose_direction_goalie(consider_direction, striker)
+        striker_direction = striker.choose_direction_striker(consider_direction)
         if goalie_direction == striker_direction:
             winner = self
         else:
             winner = striker
 
-        Player.record_play(self, goalie_direction, striker_direction, winner)
+        Player.record_play(self, striker, striker_direction, winner, consider_direction)
         if print_result:
-            print("Player kicked to the ", striker_direction, ", goal keeper jumped to the ",
+            print("Player",striker.name, "kicked to the ", striker_direction, ", goal keeper jumped to the ",
                   goalie_direction, ", the winner is ", winner.name)
-        # return winner
+        if not consider_direction:
+            return (self.wins_case1/100)*100
+        else:
+            return (self.wins_case2/100)*100
 
 
 # outside class Player
@@ -90,7 +152,7 @@ def training():
             if count_right_leg[i - 3] != 0: count_right_leg[i] = (count_right_leg[i - 3] / r_count) * 100
             if count_left_leg[i - 3] != 0: count_left_leg[i] = (count_left_leg[i - 3] / l_count) * 100
 
-    #print(count_right_leg, count_left_leg)
+    # print(count_right_leg, count_left_leg)
 
 
 if __name__ == '__main__':
@@ -108,10 +170,16 @@ if __name__ == '__main__':
     for match in range(100):
         kick_taker = choice(Player.team)
         goal_keeper = Player.keeper
-        goal_keeper.penalty_sim(kick_taker, print_result=True)
+        win_perc = goal_keeper.penalty_sim(kick_taker, print_result=True, consider_direction=False)
+    print("Win %:", win_perc)
+    print("Scenario 1 done\n\nStarting scenario 2\n\n")
 
     # SCENARIO 2: goal keeper jumps in the direction the opponents most frequently shoot in
-
+    for match in range(100):
+        kick_taker = choice(Player.team)
+        goal_keeper = Player.keeper
+        win_perc = goal_keeper.penalty_sim(kick_taker, print_result=True, consider_direction=True)
+    print("Win %:", win_perc)
     # SCENARIO 3: goal keeper considers striking foot
     # Step 1 (Pre-Monte Carlo step): Find a correlation between foot used and kick direction
     training()
