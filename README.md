@@ -1,5 +1,5 @@
 # 590PR Final_Project
-![alt text](https://png.pngtree.com/thumb_back/fw800/back_pic/03/52/29/3557938f88c3046.jpg)
+
 # Title: Goalkeeper Success Rate Simulation
 
 ## Team Member(s): Claire Wu|Salonee Shah|Samuel John
