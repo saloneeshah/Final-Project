@@ -21,7 +21,7 @@ Assumptions we are using are as follows:
 
 •	Striker has 9 kicking directions and Goalie has 9 saving directions
 
-•	Striker’s kicking direction will not be changed based on Goalie behavior(In Scenario 2&3, If Goalie found a team’s or a player’s frequent direction, and always save the ball in that direction, striker’s kick will not be affected or changed)
+•	Striker’s kicking direction will not be changed based on Goalie's behavior(In Scenario 2&3, If Goalie found a team’s or a player’s frequent direction, and always save the ball in that direction, striker’s kick will not be affected or changed)
 
 ## Simulation's variables of uncertainty
 List and describe your simulation's variables of uncertainty (where you're using pseudo-random number generation). For each such variable, how did you decide the range and probability distribution to use?  Do you think it's a good representation of reality?
