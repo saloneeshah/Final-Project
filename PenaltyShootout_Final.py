@@ -180,6 +180,6 @@ if __name__ == '__main__':
         goal_keeper = Player.keeper
         win_perc = goal_keeper.penalty_sim(kick_taker, print_result=True, consider_direction=True)
     print("Win %:", win_perc)
-    # SCENARIO 3: goal keeper considers striking foot
+    # SCENARIO 3: goal keeper considers striking foot (Scenario3)
     # Step 1 (Pre-Monte Carlo step): Find a correlation between foot used and kick direction
     training()
