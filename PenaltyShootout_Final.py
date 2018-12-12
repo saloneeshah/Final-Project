@@ -1,6 +1,8 @@
 import csv
 from random import choice, randint
 from collections import Counter, defaultdict
+import matplotlib.pyplot as plt
+
 
 
 class Player:
@@ -183,3 +185,4 @@ if __name__ == '__main__':
     # SCENARIO 3: goal keeper considers striking foot (Scenario3)
     # Step 1 (Pre-Monte Carlo step): Find a correlation between foot used and kick direction
     training()
+

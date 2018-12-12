@@ -37,7 +37,7 @@ class Player:
                 :param team:
                 :param consider_direction:
                 :param striker:
-                :return: jump_dir
+                :return: jump_dir: direction in which goalie jumps
                 """
 
         if not consider_direction:
