@@ -34,8 +34,10 @@ class Player:
     def choose_direction_goalie(team, consider_direction, striker):
         """
                 To choose goal keeper's direction
-                :param team: User input
-                :return: List of Weather intensity
+                :param team:
+                :param consider_direction:
+                :param striker:
+                :return: jump_dir
                 """
 
         if not consider_direction:
