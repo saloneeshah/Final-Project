@@ -2,9 +2,18 @@ from random import choice, randint
 from collections import Counter
 import numpy as np
 import math
+import matplotlib.pyplot as plt
+
 
 
 class Player:
+    """
+        The player contains two players where can be either the striker who kicks for the goal
+        or goal keeper who saves the goal.
+        However, this goalie can be trained to use adaptive training techniques by recording striker's kick direction
+        or team's kick direction and calculates the win percentage of saving the goal
+        """
+
     # player_count = 0
     team = []
     keeper = None
@@ -13,6 +22,13 @@ class Player:
     team_jump_dir = []
 
     def __init__(self, name=None):
+        """
+            To check whether the player is a striker or a goal keeper
+            and if it's a striker then appends to the list of players
+            :param:name:Name of the player either 'striker' or 'goalie'
+            :return:
+        """
+
         # Player.player_count += 1
         if name != 'Goalie':
             Player.team.append(self)
@@ -27,6 +43,15 @@ class Player:
 
     @staticmethod
     def choose_direction_goalie(team, consider_direction, striker):
+        """
+            To choose goal keeper's direction randomly from the list of direction when consider_directon is false,
+            chooses from team tendency if it is team when consider_direction is true else chooses from striker's tendency
+            :param team: team of strikers
+            :param consider_direction: direction of the strikers either true or false
+            :param striker: player who kicks the ball
+            :return: jump_dir,direction: direction in which goalie should jump randomly or the direction left,right or middle
+        """
+
         if not consider_direction:
             directions = ['Right', 'Left', 'Middle']
             jump_dir = choice(directions)
@@ -42,6 +67,14 @@ class Player:
             return direction
 
     def choose_direction_striker(self, consider_direction):
+        """To choose striker's direction randomly from the list of direction when consider_directionis false
+            or based on striker's tendency when consider_direction is true
+            :param self:Striker
+            :param consider_direction: direction of the strikers either true or false
+            :return: jump_dir,left,right,middle: direction in which goalie should jump randomly
+            or the direction left,right or middle
+        """
+
         if not consider_direction:
             directions = ['Right', 'Left', 'Middle']
             jump_dir = choice(directions)
@@ -67,6 +100,18 @@ class Player:
 
     @staticmethod
     def record_play(gk: 'Player', opponent: 'Player', opp_dir: str, winner: 'Player', consider_direction, team):
+        """To record goalie's win or losses for when the goalie jumps in random direction to save the goal
+            or jumps in the team's frequent direction or striker's frequent direction
+            by calculating team's tendency or striker's tendency respectively
+            :param gk: Player
+            :param opponent: Player
+            :param opp_dir: opponent's direction
+            :param winner: Player who can be either striker or a goalie
+            :param consider_direction: direction of strikers either true or false
+            :param team: team of strikers
+            :return:
+        """
+
         # record goalies wins and losses
         if winner == gk:
             if not consider_direction:
@@ -86,6 +131,18 @@ class Player:
                     Player.keeper.losses_case3 += 1
 
     def penalty_sim(self, match, striker, tests, print_result=False, team=False, consider_direction=False):
+        """To calculate penalty simulation by considering the striker's and goalie's direction,
+            when both same direction, results in goalie's win for maximum cases else striker wins
+                :param self: Goalie
+                :param match: n scenarios for range in tests
+                :param striker: opponent player
+                :param tests: number of cases for which simulation should work
+                :param print_result: prints saved or missed, it's either true or false
+                :param team: team of strikers, true only for team else false
+                :param consider_direction: direction of strikers, either true or false
+                :return: wins_case1,wins_case2,wins_case3: Goalie's win % for case 1,case 2 or case 3
+        """
+
         # self = goalie, opponent = striker
         if team and match < 5:
             striker_direction = striker.choose_direction_striker(consider_direction)
@@ -125,6 +182,26 @@ class Player:
 
 # outside class Player
 def fail_or_succeed(strike_dir, different):
+    """
+        :param strike_dir: Striker's direction either left right or middle
+        :param different: different is just true or false where if both direction are same it is true
+        or if both direction are different it is false
+        :return: 'Save' or 'Goal'
+
+        >>> fail_or_succeed('Left','True')
+        'Save'
+        >>> fail_or_succeed('Left','False')
+        'Goal'
+        >>> fail_or_succeed('Right','True')
+        'Save'
+        >>> fail_or_succeed('Right','False')
+        'Goal'
+        >>> fail_or_succeed('Middle','True')
+        'Save'
+        >>> fail_or_succeed('Middle','False')
+        'Goal'
+    """
+
     # create 1 out of 10 chance for player to miss the goal entirely
     n = randint(1, 10)
     if n == 1:
@@ -243,3 +320,15 @@ if __name__ == '__main__':
 
     for i in final_results:
         print(i[0], i[1], i[2], i[3])
+    plt.xlim([0, 100])
+    plt.hist(win_perc, bins=3, normed=1, histtype='bar', color='blue')
+
+    plt.legend(loc='upper right')
+
+    # Add labels
+    plt.xlabel('Scenarios')
+    plt.ylabel('Win percentage of a Goalie')
+    plt.title("Plot visualizing the comparison between the all win % for all the 3 scenarios")
+
+    plt.show()
+
