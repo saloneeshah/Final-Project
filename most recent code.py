@@ -1,19 +1,8 @@
-"""
-IS 590PR - Programming for Analytics & Data Processing
-Final Project- Goalkeeper Success Rate Simulation
-Authors:
-Samuel John
-Salonee Shah
-Claire Wu
-Important abbreviations used in the code:
-Note:
-"""
 from random import choice, randint
 from collections import Counter
 import numpy as np
 import math
 import matplotlib.pyplot as plt
-
 
 
 class Player:
@@ -60,14 +49,6 @@ class Player:
             :param consider_direction: direction of the strikers either true or false
             :param striker: player who kicks the ball
             :return: jump_dir,direction: direction in which goalie should jump randomly or the direction left,right or middle
-
-            >>> Player.choose_direction_goalie(['Player A','Player B','Player C','Player D','Player E'],'False','Player A')
-            'Left'
-            >>> Player.choose_direction_goalie(['Player A','Player B','Player C','Player D','Player E'],'True','Player A')
-            'Left'
-            >>> Player.choose_direction_goalie(['Player A','Player B','Player C','Player D','Player E'],'False','')
-            'Right'
-
         """
 
         if not consider_direction:
@@ -91,15 +72,6 @@ class Player:
             :param consider_direction: direction of the strikers either true or false
             :return: jump_dir,left,right,middle: direction in which goalie should jump randomly
             or the direction left,right or middle
-
-            >>> Player.choose_direction_striker('Player A','False')
-            'Left'
-            >>> Player.choose_direction_striker('Player B','True')
-            'Middle'
-            >>> Player.choose_direction_striker('Player C','True')
-            'Right'
-            >>> Player.choose_direction_striker('Player D','False')
-            'Middle'
         """
 
         if not consider_direction:
@@ -208,29 +180,34 @@ class Player:
 
 
 # outside class Player
-def fail_or_succeed(strike_dir, different):
+def fail_or_succeed(strike_dir, different, n=None, sc=None, gc = None):
     """
         :param strike_dir: Striker's direction either left right or middle
         :param different: different is just true or false where if both direction are same it is true
         or if both direction are different it is false
-        :return: 'Save' or 'Goal'
-
-        >>> Player.fail_or_succeed('Left','True')
-        'Save'
-        >>> Player.fail_or_succeed('Left','False')
+        :param n: an parameter added for doctest, passing 1 will return miss, passing anything else will run the next codes
+        :param sc: an parameter added for doctest in order to have a SET select_difficulty value for doctest
+        :param gc: an parameter added for doctest in order to have a SET goalie_difficulty value for doctest
+        :return: 'Save' or 'Goal' or 'Miss'
+        >>> fail_or_succeed('Left', True, 3, 1, 1)
         'Goal'
-        >>> Player.fail_or_succeed('Right','True')
+        >>> fail_or_succeed('Left', True, 1)
+        'Miss'
+        >>> fail_or_succeed('Left', False, 3, 2, 2)
         'Save'
-        >>> Player.fail_or_succeed('Right','False')
+        >>> fail_or_succeed('Right', True, 3, 2, 1)
         'Goal'
-        >>> Player.fail_or_succeed('Middle','True')
+        >>> fail_or_succeed('Right', False, 3, 0, 0)
         'Save'
-        >>> Player.fail_or_succeed('Middle','False')
+        >>> fail_or_succeed('Middle', True, 3)
+        'Goal'
+        >>> fail_or_succeed('Middle', False, 3, 2, 0)
         'Goal'
     """
 
     # create 1 out of 10 chance for player to miss the goal entirely
-    n = randint(1, 10)
+    if n is None:
+        n = randint(1, 10)
     if n == 1:
         return "Miss"
     # if player misses, function ends here and returns 'Miss' for both cases, goalie jumps in same/opposite direction
@@ -245,8 +222,14 @@ def fail_or_succeed(strike_dir, different):
                 striker_difficulty = [0, 0, 0, 0, 1, 1]
                 goalie_difficulty = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1]
 
-            select_difficulty = choice(striker_difficulty)
-            goalie_choice = choice(goalie_difficulty)
+            if sc is None:
+                select_difficulty = choice(striker_difficulty)
+            else:
+                select_difficulty = sc #added for doc test
+            if gc is None:
+                goalie_choice = choice(goalie_difficulty)
+            else:
+                goalie_choice = gc #added for doc test
             if select_difficulty == goalie_choice:
                 return "Save"
             else:
@@ -273,12 +256,12 @@ if __name__ == '__main__':
         except ValueError:
             print('\nYou did not enter a valid integer')
 
-    final_results = [['','Total','Win', 'Percentages'],['Run No.', 'Scenario 1', 'Scenario 2', 'Scenario 3']]
+    final_results = [['', 'Total', 'Win', 'Percentages'], ['Run No.', 'Scenario 1', 'Scenario 2', 'Scenario 3']]
     sum_wins = ['Sum:', 0, 0, 0]
 
-    for i in range (0, program_run):
-        temp_result = [(i+1)]
-        print("Beginning Run ", (i+1))
+    for i in range(0, program_run):
+        temp_result = [(i + 1)]
+        print("Beginning Run ", (i + 1))
         # SCENARIO 1: goal keeper jumps in random direction
         # step 1: create 5 striker and 1 goalie
         print("\nBeginning Scenario 1 - Goalie jumps in Random Direction")
@@ -297,10 +280,11 @@ if __name__ == '__main__':
             win_perc = goal_keeper.penalty_sim(match, kick_taker, tests, print_result=False, team=False,
                                                consider_direction=False)
 
-        print("Number of penalties: ", tests, "\nGoals: ", goal_keeper.losses_case1, "\nSaves: ", goal_keeper.wins_case1,
+        print("Number of penalties: ", tests, "\nGoals: ", goal_keeper.losses_case1, "\nSaves: ",
+              goal_keeper.wins_case1,
               "\nGoalkeeper Success Rate: ", win_perc, "%")
         temp_result.append(win_perc)
-        sum_wins[1]+=win_perc
+        sum_wins[1] += win_perc
         print("Scenario 1 done\n\nStarting scenario 2 - Goalie jumps in Team's frequent kick direction")
         print("-------------------------------------------------------")
 
@@ -318,10 +302,11 @@ if __name__ == '__main__':
             else:
                 win_perc = goal_keeper.penalty_sim(match, kick_taker, tests, print_result=False, team=True,
                                                    consider_direction=True)
-        print("Number of penalties: ", tests, "\nGoals: ", goal_keeper.losses_case2, "\nSaves: ", goal_keeper.wins_case2,
+        print("Number of penalties: ", tests, "\nGoals: ", goal_keeper.losses_case2, "\nSaves: ",
+              goal_keeper.wins_case2,
               "\nGoalkeeper Success Rate: ", win_perc, "%")
         temp_result.append(win_perc)
-        sum_wins[2]+=win_perc
+        sum_wins[2] += win_perc
         print("Scenario 2 done\n\nStarting scenario 3 - Goalie jumps in Player's frequent kick direction")
         print("-------------------------------------------------------")
 
@@ -336,19 +321,28 @@ if __name__ == '__main__':
             goal_keeper = Player.keeper
             win_perc = goal_keeper.penalty_sim(match, kick_taker, tests, print_result=False, team=False,
                                                consider_direction=True)
-        print("Number of penalties: ", tests, "\nGoals: ", goal_keeper.losses_case3, "\nSaves: ", goal_keeper.wins_case3,
+        print("Number of penalties: ", tests, "\nGoals: ", goal_keeper.losses_case3, "\nSaves: ",
+              goal_keeper.wins_case3,
               "\nGoalkeeper Success Rate: ", win_perc, "%")
         temp_result.append(win_perc)
-        sum_wins[3]+=win_perc
+        sum_wins[3] += win_perc
         print("Scenario 3 done")
         print("-------------------------------------------------------\n\n")
         final_results.append(temp_result)
     final_results.append(sum_wins)
 
+    # print()
     for i in final_results:
         print(i[0], i[1], i[2], i[3])
-    plt.xlim([0, 100])
-    plt.hist(win_perc, bins=3, normed=1, histtype='bar', color='blue')
+
+    # plt.xlim([0, 100])
+    avg = [x / program_run for x in final_results[-1][1:]]  # get average value
+    print("Avg:", avg)
+    # plt.bar(win_perc, bins=3, normed=1, histtype='bar', color='blue')
+    objects = ('Scenario1', 'Scenario2', 'Scenario3')
+
+    plt.bar(objects, avg, align='center', alpha=0.5)
+    # plt.yticks(y_pos, objects)
 
     plt.legend(loc='upper right')
 
@@ -359,3 +353,5 @@ if __name__ == '__main__':
 
     plt.show()
 
+    import doctest
+    doctest.testmod()
