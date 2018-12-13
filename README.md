@@ -35,8 +35,7 @@ Variable 4: goalie saving difficulty
 
 The range of both kicking direction and saving directoin is either left, middle and right 
 The striker kicking area is as below: 
-
-
+![Optional Text](../Final-Project/temp_work_files/Goalie Save Tendency Areas.png)
 
 ## Hypothesis or hypotheses before running the simulation:
 Saving the ball based on team’s most frequent kicking direction/each striker’s most frequent kicking direction can increase the success percentage of a goalie
