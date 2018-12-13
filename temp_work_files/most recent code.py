@@ -1,4 +1,5 @@
 from random import choice, randint
+from collections import Counter
 import numpy as np
 import math
 
@@ -8,12 +9,13 @@ class Player:
     team = []
     keeper = None
     (team_count_r_total, team_count_l_total, team_count_m_total) = (0, 0, 0)
-    team_tendency = [1,1,1]
+    team_tendency = [1, 1, 1]
+    team_jump_dir = []
 
     def __init__(self, name=None):
         # Player.player_count += 1
         if name != 'Goalie':
-                Player.team.append(self)
+            Player.team.append(self)
         else:
             Player.keeper = self
         self.name = name
@@ -21,7 +23,7 @@ class Player:
         (self.losses_case1, self.losses_case2, self.losses_case3) = (0, 0, 0)
         (self.count_r_total, self.count_l_total, self.count_m_total) = (0, 0, 0)
         self.tendency = [1, 1, 1]
-
+        self.jump_dir_history = []
 
     @staticmethod
     def choose_direction_goalie(team, consider_direction, striker):
@@ -30,69 +32,17 @@ class Player:
             jump_dir = choice(directions)
             return jump_dir
         else:
-            if not team:
-                '''n = randint(1, sum(striker.tendency))
-                if n <= striker.tendency[0]:
-                    direction = 'Right'
-                elif n <= striker.tendency[0] + striker.tendency[1]:
-                    direction = 'Left'
-                else:
-                    direction = 'Middle'
-                '''
-                cnt = [striker.count_r_total, striker.count_l_total, striker.count_m_total]
-                direction_index = [i for i, e in enumerate(cnt) if e == max(cnt)]
-                if len(direction_index) == 1:
-                    if direction_index == [0]:
-                        direction = 'Right'
-                    elif direction_index == [1]:
-                        direction = 'Left'
-                    else:
-                        direction = 'Middle'
-                elif len(direction_index) == 2:
-                    if direction_index == [0, 1]:
-                        directions = ['Right', 'Left']
-                    elif direction_index == [0, 2]:
-                        directions = ['Right', 'Middle']
-                    elif direction_index == [1, 2]:
-                        directions = ['Left', 'Middle']
-                    direction = choice(directions)
-                elif len(direction_index) > 2:
-                    directions = ['Right', 'Left', 'Middle']
-                    direction = choice(directions)
-                return direction
+            if team:
+                counter = Counter(Player.team_jump_dir)
             else:
-                '''n = randint(1, sum(Player.team_tendency))
-                if n <= Player.team_tendency[0]:
-                    direction = 'Right'
-                elif n <= Player.team_tendency[0] + Player.team_tendency[1]:
-                    direction = 'Left'
-                else:
-                    direction = 'Middle'
-                '''
-                cnt = [Player.team_count_r_total, Player.team_count_l_total, Player.team_count_m_total]
-                direction_index = [i for i, e in enumerate(cnt) if e == max(cnt)]
-                if len(direction_index) == 1:
-                    if direction_index == [0]:
-                        direction = 'Right'
-                    elif direction_index == [1]:
-                        direction = 'Left'
-                    else:
-                        direction = 'Middle'
-                elif len(direction_index) == 2:
-                    if direction_index == [0, 1]:
-                        directions = ['Right', 'Left']
-                    elif direction_index == [0, 2]:
-                        directions = ['Right', 'Middle']
-                    elif direction_index == [1, 2]:
-                        directions = ['Left', 'Middle']
-                    direction = choice(directions)
-                elif len(direction_index) > 2:
-                    directions = ['Right', 'Left', 'Middle']
-                    direction = choice(directions)
-                return direction
+                counter = Counter(striker.jump_dir_history)
+            max_count = max(counter.values())
+            mode = [i for i, j in counter.items() if j == max_count]
+            direction = choice(mode)
+            return direction
 
-    def choose_direction_striker(self, team, consider_direction):
-        if team or not consider_direction:
+    def choose_direction_striker(self, consider_direction):
+        if not consider_direction:
             directions = ['Right', 'Left', 'Middle']
             jump_dir = choice(directions)
             return jump_dir
@@ -100,16 +50,20 @@ class Player:
             n = randint(1, sum(self.tendency))
             if n <= self.tendency[0]:
                 self.tendency[0] += 1
-                Player.team_tendency[0] += 1
-                return 'Right'
+                jump_dir = 'Right'
             elif n <= self.tendency[0] + self.tendency[1]:
                 self.tendency[1] += 1
-                Player.team_tendency[1] += 1
-                return 'Left'
+                jump_dir = 'Left'
             else:
                 self.tendency[2] += 1
-                Player.team_tendency[2] += 1
-                return 'Middle'
+                jump_dir = 'Middle'
+            if len(Player.team_jump_dir) == 5:
+                Player.team_jump_dir.pop(0)
+            if len(self.jump_dir_history) == 5:
+                self.jump_dir_history.pop(0)
+            Player.team_jump_dir.append(jump_dir)
+            self.jump_dir_history.append(jump_dir)
+            return jump_dir
 
     @staticmethod
     def record_play(gk: 'Player', opponent: 'Player', opp_dir: str, winner: 'Player', consider_direction, team):
@@ -131,26 +85,13 @@ class Player:
                 else:
                     Player.keeper.losses_case3 += 1
 
-        # record players selected direction
-        if consider_direction:
-            if opp_dir == 'Right':
-                opponent.count_r_total += 1
-                Player.team_count_r_total += 1
-            elif opp_dir == 'Left':
-                opponent.count_l_total += 1
-                Player.team_count_l_total += 1
-            elif opp_dir == 'Middle':
-                opponent.count_m_total += 1
-                Player.team_count_m_total += 1
-
-
-
     def penalty_sim(self, match, striker, tests, print_result=False, team=False, consider_direction=False):
         # self = goalie, opponent = striker
-        goalie_direction = self.choose_direction_goalie(team, consider_direction, striker)
-        striker_direction = striker.choose_direction_striker(team, consider_direction)
-        if team and match < 1000:
+        if team and match < 5:
+            striker_direction = striker.choose_direction_striker(consider_direction)
             return 0
+        goalie_direction = self.choose_direction_goalie(team, consider_direction, striker)
+        striker_direction = striker.choose_direction_striker(consider_direction)
         if goalie_direction == striker_direction:
             different = False
             result = fail_or_succeed(striker_direction, different)
@@ -235,10 +176,11 @@ if __name__ == '__main__':
     for match in range(tests):
         kick_taker = choice(Player.team)
         goal_keeper = Player.keeper
-        win_perc = goal_keeper.penalty_sim(match, kick_taker, tests, print_result=False, team=False, consider_direction=False)
+        win_perc = goal_keeper.penalty_sim(match, kick_taker, tests, print_result=False, team=False,
+                                           consider_direction=False)
 
     print("Number of penalties: ", tests, "\nGoals: ", goal_keeper.losses_case1, "\nSaves: ", goal_keeper.wins_case1,
-          "\nGoalkeeper Success Rate: ", win_perc,"%")
+          "\nGoalkeeper Success Rate: ", win_perc, "%")
     print("Scenario 1 done\n\nStarting scenario 2 - Goalie jumps in Team's frequent kick direction")
     print("-------------------------------------------------------")
 
@@ -250,12 +192,14 @@ if __name__ == '__main__':
     for match in range(tests):
         kick_taker = choice(Player.team)
         goal_keeper = Player.keeper
-        if match < 1000:
-            train = goal_keeper.penalty_sim(match, kick_taker, tests, print_result=False, team=True, consider_direction=True)
+        if match < 5:
+            train = goal_keeper.penalty_sim(match, kick_taker, tests, print_result=False, team=True,
+                                            consider_direction=True)
         else:
-            win_perc = goal_keeper.penalty_sim(match, kick_taker, tests, print_result=False, team=True, consider_direction=True)
+            win_perc = goal_keeper.penalty_sim(match, kick_taker, tests, print_result=True, team=True,
+                                               consider_direction=True)
     print("Number of penalties: ", tests, "\nGoals: ", goal_keeper.losses_case2, "\nSaves: ", goal_keeper.wins_case2,
-          "\nGoalkeeper Success Rate: ", win_perc,"%")
+          "\nGoalkeeper Success Rate: ", win_perc, "%")
     print("Scenario 2 done\n\nStarting scenario 3 - Goalie jumps in Player's frequent kick direction")
     print("-------------------------------------------------------")
 
@@ -268,8 +212,9 @@ if __name__ == '__main__':
     for match in range(tests):
         kick_taker = choice(Player.team)
         goal_keeper = Player.keeper
-        win_perc = goal_keeper.penalty_sim(match, kick_taker, tests, print_result=False, team=False, consider_direction=True)
+        win_perc = goal_keeper.penalty_sim(match, kick_taker, tests, print_result=True, team=False,
+                                           consider_direction=True)
     print("Number of penalties: ", tests, "\nGoals: ", goal_keeper.losses_case3, "\nSaves: ", goal_keeper.wins_case3,
-          "\nGoalkeeper Success Rate: ", win_perc,"%")
+          "\nGoalkeeper Success Rate: ", win_perc, "%")
     print("Scenario 3 done")
     # ------------------------------------------------------------------------------------------------------------------
