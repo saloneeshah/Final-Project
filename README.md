@@ -17,9 +17,11 @@ The simulation conditions we are considering are:
 
 Assumptions we are using are as follows:
 
-•	If goalie's direction is the same as striker's direction, the goalie wins
+•	Striker has 3 kicking directions and Goalie has 3 saving directions
 
-•	Striker has 9 kicking directions and Goalie has 9 saving directions
+•	If goalie's direction is not the same as striker's direction, the goalie fails and the striker wins
+
+•	There is a saving tendency based on the area the ball hits, we have divided the whole area into 18 sub-areas and there are 6 areas for each direction. For each area the saving difficulty varies from 0, 1, 2 based on the possibility for the goalie to save the ball in that area
 
 •	Striker’s kicking direction will not be changed based on Goalie's behavior(In Scenario 2&3, If Goalie found a team’s or a player’s frequent direction, and always save the ball in that direction, striker’s kick will not be affected or changed)
 
@@ -28,10 +30,13 @@ List and describe your simulation's variables of uncertainty (where you're using
 
 Variable 1：striker's kicking direction
 Variable 2: goalie's saving direction
+Variable 3: striker kicking area
+Variable 4: goalie saving difficulty 
 
-The range of both kicking direction and saving directoin is either left, middle, right .... (to be added for 9 directions) 
+The range of both kicking direction and saving directoin is either left, middle and right 
+The striker kicking area is as below: 
 
-As the range of the variable is based on real dataset, we believe it's a good representation of reality. We'd assume a normal distribution(to be added)
+
 
 ## Hypothesis or hypotheses before running the simulation:
 Saving the ball based on team’s most frequent kicking direction/each striker’s most frequent kicking direction can increase the success percentage of a goalie
