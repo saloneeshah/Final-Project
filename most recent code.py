@@ -1,3 +1,13 @@
+"""
+IS 590PR - Programming for Analytics & Data Processing
+Final Project- Goalkeeper Success Rate Simulation
+Authors:
+Samuel John
+Salonee Shah
+Claire Wu
+Important abbreviations used in the code:
+Note:
+"""
 from random import choice, randint
 from collections import Counter
 import numpy as np
@@ -50,6 +60,14 @@ class Player:
             :param consider_direction: direction of the strikers either true or false
             :param striker: player who kicks the ball
             :return: jump_dir,direction: direction in which goalie should jump randomly or the direction left,right or middle
+
+            >>> Player.choose_direction_goalie(['Player A','Player B','Player C','Player D','Player E'],'False','Player A')
+            'Left'
+            >>> Player.choose_direction_goalie(['Player A','Player B','Player C','Player D','Player E'],'True','Player A')
+            'Left'
+            >>> Player.choose_direction_goalie(['Player A','Player B','Player C','Player D','Player E'],'False','')
+            'Right'
+
         """
 
         if not consider_direction:
@@ -73,6 +91,15 @@ class Player:
             :param consider_direction: direction of the strikers either true or false
             :return: jump_dir,left,right,middle: direction in which goalie should jump randomly
             or the direction left,right or middle
+
+            >>> Player.choose_direction_striker('Player A','False')
+            'Left'
+            >>> Player.choose_direction_striker('Player B','True')
+            'Middle'
+            >>> Player.choose_direction_striker('Player C','True')
+            'Right'
+            >>> Player.choose_direction_striker('Player D','False')
+            'Middle'
         """
 
         if not consider_direction:
@@ -188,17 +215,17 @@ def fail_or_succeed(strike_dir, different):
         or if both direction are different it is false
         :return: 'Save' or 'Goal'
 
-        >>> fail_or_succeed('Left','True')
+        >>> Player.fail_or_succeed('Left','True')
         'Save'
-        >>> fail_or_succeed('Left','False')
+        >>> Player.fail_or_succeed('Left','False')
         'Goal'
-        >>> fail_or_succeed('Right','True')
+        >>> Player.fail_or_succeed('Right','True')
         'Save'
-        >>> fail_or_succeed('Right','False')
+        >>> Player.fail_or_succeed('Right','False')
         'Goal'
-        >>> fail_or_succeed('Middle','True')
+        >>> Player.fail_or_succeed('Middle','True')
         'Save'
-        >>> fail_or_succeed('Middle','False')
+        >>> Player.fail_or_succeed('Middle','False')
         'Goal'
     """
 
