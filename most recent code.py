@@ -49,6 +49,14 @@ class Player:
             :param consider_direction: direction of the strikers either true or false
             :param striker: player who kicks the ball
             :return: jump_dir,direction: direction in which goalie should jump randomly or the direction left,right or middle
+
+            >>> Player.choose_direction_goalie(['Player A','Player B','Player C','Player D','Player E'],'False','Player A')
+            'Left'
+            >>> Player.choose_direction_goalie(['Player A','Player B','Player C','Player D','Player E'],'True','Player A')
+            'Left'
+            >>> Player.choose_direction_goalie(['Player A','Player B','Player C','Player D','Player E'],'False','')
+            'Right'
+
         """
 
         if not consider_direction:
@@ -72,6 +80,16 @@ class Player:
             :param consider_direction: direction of the strikers either true or false
             :return: jump_dir,left,right,middle: direction in which goalie should jump randomly
             or the direction left,right or middle
+
+            >>> Player.choose_direction_striker('Player A','False')
+            'Left'
+            >>> Player.choose_direction_striker('Player B','True')
+            'Middle'
+            >>> Player.choose_direction_striker('Player C','True')
+            'Right'
+            >>> Player.choose_direction_striker('Player D','False')
+            'Middle'
+
         """
 
         if not consider_direction:
@@ -189,19 +207,19 @@ def fail_or_succeed(strike_dir, different, n=None, sc=None, gc = None):
         :param sc: an parameter added for doctest in order to have a SET select_difficulty value for doctest
         :param gc: an parameter added for doctest in order to have a SET goalie_difficulty value for doctest
         :return: 'Save' or 'Goal' or 'Miss'
-        >>> fail_or_succeed('Left', True, 3, 1, 1)
+        >>> Player.fail_or_succeed('Left', True, 3, 1, 1)
         'Goal'
-        >>> fail_or_succeed('Left', True, 1)
+        >>> Player.fail_or_succeed('Left', True, 1)
         'Miss'
-        >>> fail_or_succeed('Left', False, 3, 2, 2)
+        >>> Player.fail_or_succeed('Left', False, 3, 2, 2)
         'Save'
-        >>> fail_or_succeed('Right', True, 3, 2, 1)
+        >>> Player.fail_or_succeed('Right', True, 3, 2, 1)
         'Goal'
-        >>> fail_or_succeed('Right', False, 3, 0, 0)
+        >>> Player.fail_or_succeed('Right', False, 3, 0, 0)
         'Save'
-        >>> fail_or_succeed('Middle', True, 3)
+        >>> Player.fail_or_succeed('Middle', True, 3)
         'Goal'
-        >>> fail_or_succeed('Middle', False, 3, 2, 0)
+        >>> Player.fail_or_succeed('Middle', False, 3, 2, 0)
         'Goal'
     """
 
@@ -353,5 +371,3 @@ if __name__ == '__main__':
 
     plt.show()
 
-    import doctest
-    doctest.testmod()
