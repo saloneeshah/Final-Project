@@ -29,19 +29,25 @@ Assumptions we are using are as follows:
 List and describe your simulation's variables of uncertainty (where you're using pseudo-random number generation). For each such variable, how did you decide the range and probability distribution to use?  Do you think it's a good representation of reality?
 
 Variable 1：striker's kicking direction
+
 Variable 2: goalie's saving direction
+
 Variable 3: striker kicking area
+
 Variable 4: goalie saving difficulty 
 
 The range of both kicking direction and saving direction is either left, middle and right 
-The striker kicking area is as below: 
-![Alt text](http://funkyimg.com/view/2Pcoj)
+
+The Goalie's saving difficulty and the striker kicking area is as below: 
+![Alt text](http://funkyimg.com/i/2Pcoj.png)
 
 ## Hypothesis or hypotheses before running the simulation:
 Saving the ball based on team’s most frequent kicking direction/each striker’s most frequent kicking direction can increase the success percentage of a goalie
 
 ## Analytical Summary of your findings: (e.g. Did you adjust the scenario based on previous simulation outcomes?  What are the management decisions one could make from your simulation's output, etc.)
 In the beginning, we have set the second scenario as considering player's frequent kicking direction and the third scenario as considering player's foot uses and kicking direction; However, we realized that it doesn't make a lot of sense to consider which foot the player uses, because most players will do the penalty strike with their dominant leg. Thus, we added the team's frequent kicking direction to our program. 
+
+Also, in our early versions, we didn't consider the chance that the striker totally misses the goal, and we assumed every time when the goalie goes to the same direction as the striker, the goalie will win -- which is not accurate. Thus, we added the chances that the striker may miss the goal completely and added tendency to evaluate goalie's difficulty in saving the ball 
  
 Based on a sample of 20 runs, we have the following findings:
 
@@ -53,7 +59,7 @@ There is an increase of  9.36 % if the goalie knows the player's last 5 directio
 
 
 ## Instructions on how to use the program:
-Download and run the code.
+Please download and run the code
 
 ## All Sources Used:
 https://en.wikipedia.org/wiki/Penalty_shot
