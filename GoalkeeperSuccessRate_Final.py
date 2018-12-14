@@ -87,7 +87,8 @@ class Player:
             return direction
 
     def choose_direction_striker(self, consider_direction):
-        """To choose striker's direction randomly from the list of direction when consider_directionis false
+        """
+            To choose striker's direction randomly from the list of direction when consider_directionis false
             or based on striker's tendency when consider_direction is true
             :param self:Striker
             :param consider_direction: direction of the strikers either true or false
@@ -129,7 +130,8 @@ class Player:
 
     @staticmethod
     def record_play(gk: 'Player', opponent: 'Player', opp_dir: str, winner: 'Player', consider_direction, team):
-        """To record goalie's wins or losses count when the goalie jumps in random direction to save the goal
+        """
+            To record goalie's wins or losses count when the goalie jumps in random direction to save the goal
             or jumps in the team's frequent direction or striker's frequent direction
             by calculating team's tendency or striker's tendency respectively
             :param gk: Player
@@ -160,16 +162,17 @@ class Player:
                     Player.keeper.losses_case3 += 1
 
     def penalty_sim(self, match, striker, tests, print_result=False, team=False, consider_direction=False):
-        """To calculate penalty simulation by considering the striker's and goalie's direction,
+        """
+            To calculate penalty simulation by considering the striker's and goalie's direction,
             when both are in same direction results in goalie's win for maximum cases else striker wins
-                :param self: Goalie
-                :param match: n scenarios for range in tests
-                :param striker: opponent player
-                :param tests: number of cases for which simulation should work
-                :param print_result: prints saved or missed, it's either true or false
-                :param team: team of strikers, true only for team else false
-                :param consider_direction: direction of strikers, either true or false
-                :return: wins_case1,wins_case2,wins_case3: Goalie's win % for case 1,case 2 or case 3
+            :param self: Goalie
+            :param match: n scenarios for range in tests
+            :param striker: opponent player
+            :param tests: number of cases for which simulation should work
+            :param print_result: prints saved or missed, it's either true or false
+            :param team: team of strikers, true only for team else false
+            :param consider_direction: direction of strikers, either true or false
+            :return: wins_case1,wins_case2,wins_case3: Goalie's win % for case 1,case 2 or case 3
         """
 
         # In this function, goalie is 'self' and 'striker' is the player who is currently taking the penalty kick
@@ -223,6 +226,8 @@ class Player:
 # outside class Player
 def fail_or_succeed(strike_dir, different, n=None, sc=None, gc=None):
     """
+        To check whether the goal has been saved or missed by the goalie by considering 0,1 and 2
+        values based on convenience to reach
         :param strike_dir: Striker's direction either left right or middle
         :param different: different is just true or false where if both direction are same it is true
         or if both direction are different it is false
@@ -230,6 +235,7 @@ def fail_or_succeed(strike_dir, different, n=None, sc=None, gc=None):
         :param sc: a parameter added for doctest in order to have a SET select_difficulty value for doctest
         :param gc: a parameter added for doctest in order to have a SET goalie_difficulty value for doctest
         :return: 'Save' or 'Goal' or 'Miss'
+
         >>> fail_or_succeed('Left', True, 3, 1, 1)
         'Goal'
         >>> fail_or_succeed('Left', True, 1)
@@ -261,6 +267,7 @@ def fail_or_succeed(strike_dir, different, n=None, sc=None, gc=None):
     #  || 2 | 1 || 1 | 1 || 1 | 2 ||
     #  || 1 | 0 || 0 | 0 || 0 | 1 ||
     #  || 1 | 0 || 0 | 0 || 0 | 1 ||
+
     else:
         if not different:
             if strike_dir == "Left" or strike_dir == "Right":
