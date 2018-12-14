@@ -13,7 +13,7 @@ The simulation conditions we are considering are:
 
 •	Goalie jumps in the direction of the opponent team's most frequently kicking direction for a set number of runs
 
-•	Goalie jumps in the direction of each oppenent's most frequently kicking direction for a set number of runs
+•	Goalie jumps in the direction of each opponent's most frequently kicking direction for a set number of runs
 
 Assumptions we are using are as follows:
 
@@ -33,16 +33,24 @@ Variable 2: goalie's saving direction
 Variable 3: striker kicking area
 Variable 4: goalie saving difficulty 
 
-The range of both kicking direction and saving directoin is either left, middle and right 
+The range of both kicking direction and saving direction is either left, middle and right 
 The striker kicking area is as below: 
-![Optional Text](../Final-Project/temp_work_files/Goalie Save Tendency Areas.png)
+![Alt text](http://funkyimg.com/view/2Pcoj)
 
 ## Hypothesis or hypotheses before running the simulation:
 Saving the ball based on team’s most frequent kicking direction/each striker’s most frequent kicking direction can increase the success percentage of a goalie
 
 ## Analytical Summary of your findings: (e.g. Did you adjust the scenario based on previous simulation outcomes?  What are the management decisions one could make from your simulation's output, etc.)
-In the beginning, we assumed 3 kicking directions based on a dataset and we got very high results for scenerio 2&3. To make it more realistic-meaningful and yield more accurate results, we adjusted the assumption for striker kick direction from 3 directions to 9 directions. 
-Result TO BE ADDED
+In the beginning, we have set the second scenario as considering player's frequent kicking direction and the third scenario as considering player's foot uses and kicking direction; However, we realized that it doesn't make a lot of sense to consider which foot the player uses, because most players will do the penalty strike with their dominant leg. Thus, we added the team's frequent kicking direction to our program. 
+ 
+Based on a sample of 20 runs, we have the following findings:
+
+Conclusion 1: 
+There is an increase of 0.73 % if the goalie knows the team's last 5 directions compared to the goalie choosing random directions.
+
+Conclusion 2:
+There is an increase of  9.36 % if the goalie knows the player's last 5 directions compared to the goalie choosing random directions.
+
 
 ## Instructions on how to use the program:
 Download and run the code.
