@@ -1,6 +1,7 @@
 from random import choice, randint
 from collections import Counter
 import pandas as pd
+import numpy as np
 import matplotlib.pyplot as plt
 
 
@@ -280,7 +281,7 @@ if __name__ == '__main__':
 
         print("Number of penalties: ", tests, "\nGoals: ", goal_keeper.losses_case1, "\nSaves: ",
               goal_keeper.wins_case1,
-              "\nGoalkeeper Success Rate: ", win_perc, "%")
+              "\nGoalkeeper Success Rate: ", round(win_perc, 2), "%")
         temp_result.append(win_perc)
         print("Scenario 1 done\n\nStarting scenario 2 - Goalie jumps in Team's frequent kick direction")
         print("-------------------------------------------------------")
@@ -300,7 +301,7 @@ if __name__ == '__main__':
                                                    consider_direction=True)
         print("Number of penalties: ", tests, "\nGoals: ", goal_keeper.losses_case2, "\nSaves: ",
               goal_keeper.wins_case2,
-              "\nGoalkeeper Success Rate: ", win_perc, "%")
+              "\nGoalkeeper Success Rate: ", round(win_perc, 2), "%")
         temp_result.append(win_perc)
         print("Scenario 2 done\n\nStarting scenario 3 - Goalie jumps in Player's frequent kick direction")
         print("-------------------------------------------------------")
@@ -317,9 +318,8 @@ if __name__ == '__main__':
                                                consider_direction=True)
         print("Number of penalties: ", tests, "\nGoals: ", goal_keeper.losses_case3, "\nSaves: ",
               goal_keeper.wins_case3,
-              "\nGoalkeeper Success Rate: ", win_perc, "%")
+              "\nGoalkeeper Success Rate: ", round(win_perc, 2), "%")
         temp_result.append(win_perc)
-        print("temp result - ", temp_result)
         print("Scenario 3 done")
         print("-------------------------------------------------------\n\n")
         df = df.append(pd.Series(temp_result, index=df.columns), ignore_index=True)
@@ -328,13 +328,13 @@ if __name__ == '__main__':
 
     print(df)
 
-    print("Results:\n")
+    print("\n\n***** Results *****\n")
     print("Observation 1:\nIn Case 1 where the goalie and player both chose random directions, the goalie saved ",
-          df.loc['Average']['Scenario 1'], "% of the goals.")
+          df.loc['Average']['Scenario 1'], "% of the goals, on average.")
     print(
         "Observation 2:\nIn Case 2 where the goalie selected direction based on team's past 5 kicks and players choose "
         "direction based on their individual tendency, the goalie saved ",
-        df.loc['Average']['Scenario 2'], "% of the goals.\n\nConclusion 1: ")
+        df.loc['Average']['Scenario 2'], "% of the goals, on average.\n\nConclusion 1: ")
     diff_1and2 = df.loc['Average']['Scenario 2'] - df.loc['Average']['Scenario 1']
     if diff_1and2 == 0:
         print(
@@ -350,7 +350,7 @@ if __name__ == '__main__':
     print(
         "\nObservation 3:\nIn Case 3 where the goalie selected direction based on player's past 5 kicks and players "
         "choose direction based on their individual tendency, the goalie saved ",
-        df.loc['Average']['Scenario 3'], "% of the goals.\n\nConclusion 2:")
+        df.loc['Average']['Scenario 3'], "% of the goals, on average.\n\nConclusion 2:")
     diff_1and3 = df.loc['Average']['Scenario 3'] - df.loc['Average']['Scenario 1']
     if diff_1and3 == 0:
         print(
