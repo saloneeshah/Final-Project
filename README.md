@@ -2,7 +2,7 @@
 
 # Title: Goalkeeper Success Rate Simulation
 
-## Team Member(s):Salonee Shah | Samuel John | Claire Wu
+## Team Member(s): Claire Wu | Salonee Shah | Samuel John
 
 # Monte Carlo Simulation Scenario & Purpose:
 The program would simulate the success percentage of a goalkeeper and the purpose would be checking if using different strategies can improve the success percentage or not.  
