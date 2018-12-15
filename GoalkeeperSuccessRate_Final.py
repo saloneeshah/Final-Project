@@ -268,6 +268,13 @@ def fail_or_succeed(strike_dir, different, n=None, sc=None, gc=None):
     #  || 1 | 0 || 0 | 0 || 0 | 1 ||
     #  || 1 | 0 || 0 | 0 || 0 | 1 ||
 
+    # goal has been divided into three sections, left, center, right, (Seen below) each section has subsection which
+    # have been assigned difficulty values with respect to how difficult it is for the goalie to reach that subsection
+    # 0 being the easiest to reach and 2 being the hardest to reach
+    #   ___________________________
+    #  || 2 | 1 || 1 | 1 || 1 | 2 ||       
+    #  || 1 | 0 || 0 | 0 || 0 | 1 ||
+    #  || 1 | 0 || 0 | 0 || 0 | 1 ||
     else:
         if not different:
             if strike_dir == "Left" or strike_dir == "Right":
