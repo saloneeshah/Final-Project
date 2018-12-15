@@ -29,8 +29,6 @@ This means that if the Striker chooses Left and the Goalkeeper also chooses Left
 •	The Striker’s kicking direction will not change based on the Goalkeeper's behavior. It will be based solely on the Striker's tendency over his past kicks (Exception to this rule - Scenario 1 where the direction selection is random).
 
 ## Simulation's variables of uncertainty
-List and describe your simulation's variables of uncertainty (where you're using pseudo-random number generation). For each such variable, how did you decide the range and probability distribution to use?  Do you think it's a good representation of reality?
-
 Variable 1：Striker's kick direction (striker_direction)
 The Striker's kick direction is completely random for the first scenario and thereafter is selected based on the Striker's tendency ontained from the initial scenario. 
 The range of this variable is limited to three values, Left, Middle and Right.
@@ -68,7 +66,7 @@ We did create the logic for this case; however, we were able to find only one da
 
 Secondly, in the earlier versions of our code, we did not consider the probability of the Striker completely missing the goal or the fact that the Goalkeeper could miss the save even if he jumped in the right direction. This caused our results to vary. Thus, we added a 1 out of 10 chance that the striker may miss the goal completely and created sub-regions within the goal area that added a difficulty aspect to the Goalkeeper's jump selection decision.
  
-Based on a sample of 20 runs, we have the following findings:
+Based on a number of sample tests with runs of counts ranging from 1 to 20, where each scenario was run between 5000 and 100000 times, we have the following findings:
 
 Conclusion 1: 
 There is a minimal increase in the success percentage of the goalie while considering the team's last 5 directions compared to the goalie choosing random directions. This is due to the fact that a Striker considers his/her own tendency while choosing a direction to shoot in and not the team's tendency. In fact, the success percentage goes down if the strikers' tendency does not match the team tendency. 
