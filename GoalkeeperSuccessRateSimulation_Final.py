@@ -16,10 +16,12 @@ import matplotlib.pyplot as plt
 
 class Player:
     """
-        The player contains two players where it can be either the striker who kicks for the goal
-        or goal keeper who saves the goal.
-        However, this goalie can be trained to use adaptive training techniques by recording striker's kick direction
-        or team's kick direction and acts accordingly. Then calculates the win percentage of saving the goal
+        The Player class has been created to create instances of players, both strikers and goalkeeper.
+        It also has an instance of team which is a collection of player instances.
+        The class has a number of functions that simulate the various aspects of a penalty kick from both the stiker's
+        as well as the goalkeeper's point of view.
+        The goalkeeper can be trained to use adaptive training techniques by recording strikers' kick directions
+        or the team's kick direction and act accordingly
         """
 
     # create instances for team, keeper and team jump direction
@@ -30,8 +32,8 @@ class Player:
     # define an init class with the initial parameters of class objects
     def __init__(self, name=None):
         """
-            To check whether the player is a striker or a goal keeper
-            and if it's a striker then append to the list of players
+            This function checks if a player is a striker or keeper. 
+            Strikers are added to the shooting team while a keeper is assigned the role of a Goalkeeper.
             :param:name:Name of the player either 'Player'  as Striker or 'Goalie' as goalkeeper
             :return: none
         """
@@ -49,13 +51,14 @@ class Player:
     @staticmethod
     def choose_direction_goalie(team, consider_direction, striker):
         """
-            To choose goal keeper's direction randomly from the list of direction when consider_directon is false,
-            chooses from team tendency of it is team when consider_direction is true else chooses from striker's tendency
-            :param team: team of strikers either true or false
-            :param consider_direction: direction of the strikers either true or false
+            This function chooses is used to select the goalkeeper's jump direction.
+            The keeper's direction is chosen randomly in scenario 1, based on team tendency in scenario 2 or based on
+            striker's tendency in scenario 3. 
+            :param team: indicates if the team tendency is being considered, holds value of true or false
+            :param consider_direction: indicates if direction is being considered, holds value of true or false
             :param striker: player who kicks the ball
-            :return: jump_dir,direction: direction in which goalie should jump randomly or the direction left,right or middle
-
+            :return: jump_dir,direction: direction in which goalie should jump randomly or the direction left,right 
+            or middle
             >>> np.random.seed(1)
             >>> team=True
             >>> consider_direction=True
@@ -88,13 +91,12 @@ class Player:
 
     def choose_direction_striker(self, consider_direction):
         """
-            To choose striker's direction randomly from the list of direction when consider_directionis false
-            or based on striker's tendency when consider_direction is true
-            :param self:Striker
-            :param consider_direction: direction of the strikers either true or false
+            Function to choose striker's direction - randomly from the list of direction when consider_direction is 
+            false or based on striker's tendency when consider_direction is true
+            :param self: Striker
+            :param consider_direction: indicates if direction is being considered, holds value of true or false
             :return: jump_dir,left,right,middle: direction in which goalie should jump randomly
             or the direction left,right or middle
-
             >>> np.random.seed(1)
             >>> consider_direction=True
             >>> consider_direction=False
@@ -235,7 +237,6 @@ def fail_or_succeed(strike_dir, different, n=None, sc=None, gc=None):
         :param sc: a parameter added for doctest in order to have a SET select_difficulty value for doctest
         :param gc: a parameter added for doctest in order to have a SET goalie_difficulty value for doctest
         :return: 'Save' or 'Goal' or 'Miss'
-
         >>> fail_or_succeed('Left', True, 3, 1, 1)
         'Goal'
         >>> fail_or_succeed('Left', True, 1)
@@ -442,4 +443,3 @@ if __name__ == '__main__':
     plt.title("Plot of Goalie's win % over the 3 scenarios for each run")
     print("\nA graph of the above observations is displayed in a separate window\nClose the Graph to end the program.")
     plt.show(ax)
-
