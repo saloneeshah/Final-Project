@@ -1,8 +1,8 @@
-# 590PR Final_Project
+# IS590PR Final_Project
 
 # Title: Goalkeeper Success Rate Simulation
 
-## Team Member(s): Claire Wu|Salonee Shah|Samuel John
+## Team Member(s):Salonee Shah|Samuel John|Claire Wu
 
 # Monte Carlo Simulation Scenario & Purpose:
 The program would simulate the success percentage of a goalkeeper and the purpose would be checking if using different strategies can improve the success percentage or not.  
@@ -18,6 +18,8 @@ The simulation conditions we are considering are:
 Assumptions we are using are as follows:
 
 •	Striker has 3 kicking directions and Goalie has 3 saving directions
+
+•	Goalie is initially standing in middle to save the goal
 
 •	If goalie's direction is not the same as striker's direction, the goalie fails and the striker wins
 
@@ -42,7 +44,10 @@ The Goalie's saving difficulty and the striker kicking area is as below:
 ![Alt text](http://funkyimg.com/i/2Pcoj.png)
 
 ## Hypothesis or hypotheses before running the simulation:
-Saving the ball based on team’s most frequent kicking direction/each striker’s most frequent kicking direction can increase the success percentage of a goalie
+Recording the team’s most frequent kicking direction and then reacting accordingly can help in increasing the success rate of saving the goal by goalie than jumping in random direction
+
+Recording each striker’s most frequent kicking direction, can increase the success percentage of saving the goal by goalie than recording team's most frequent kicking direction and goalie jumping in rndom direction
+
 
 ## Analytical Summary of your findings: (e.g. Did you adjust the scenario based on previous simulation outcomes?  What are the management decisions one could make from your simulation's output, etc.)
 In the beginning, we have set the second scenario as considering player's frequent kicking direction and the third scenario as considering player's foot uses and kicking direction; However, we realized that it doesn't make a lot of sense to consider which foot the player uses, because most players will do the penalty strike with their dominant leg. Thus, we added the team's frequent kicking direction to our program. 
@@ -52,14 +57,18 @@ Also, in our early versions, we didn't consider the chance that the striker tota
 Based on a sample of 20 runs, we have the following findings:
 
 Conclusion 1: 
-There is an increase of 0.73 % if the goalie knows the team's last 5 directions compared to the goalie choosing random directions.
+There is a minimal increase in the success percentage of the goalie by considering the team's last 5 directions compared to the goalie choosing random directions.
 
 Conclusion 2:
-There is an increase of  9.36 % if the goalie knows the player's last 5 directions compared to the goalie choosing random directions.
+There is a noticeable increase in the success percentage of goalie, when the goalie knows the player's last 5 directions compared to the goalie choosing random directions.
 
 
 ## Instructions on how to use the program:
-Please download and run the code
+Please download the code GoalkeeperSuccessRateSimulation_Final.py
+Install Pandas, Numpy, Random and Matplotlib libraries before running the code if not installed
+Run the code and enter the number of times to repeat the entire program
+Then enter the number of test cases per scenario (preferably a larger value > 1000)
+View and close the graph to end the program
 
 ## All Sources Used:
 https://en.wikipedia.org/wiki/Penalty_shot
