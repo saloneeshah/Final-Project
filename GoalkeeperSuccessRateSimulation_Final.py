@@ -437,9 +437,13 @@ if __name__ == '__main__':
 
     # convert the data from dataframe in to a graph that shows the results of each run and the average across all runs
     plt.rcParams["figure.figsize"] = 18, 13
+    df.index = np.arange(1, len(df) + 1)
+    as_list = df.index.tolist()
+    as_list[-1] = 'Average'
+    df.index = as_list
     ax = df.plot.bar(rot=0)
     plt.xlabel('Scenarios per Run and Average of Each Scenario over All Runs')
     plt.ylabel('Win percentage of a Goalie')
     plt.title("Plot of Goalie's win % over the 3 scenarios for each run")
     print("\nA graph of the above observations is displayed in a separate window\nClose the Graph to end the program.")
-    plt.show(ax)
+    plt.show()
