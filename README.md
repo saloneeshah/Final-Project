@@ -95,7 +95,7 @@ Worked on coding for Scenarios 1, 2 and 3 as well as all functions involved, doc
 #### Samuel
 Worked on coding for Scenarios 1, 2 and 3 as well as all functions involved, code debugging and restructuring of overall program, dataframes, docstrings, comments, readme.
 
-Method of work:
+### Method of work:
 Each member of the team would pick up a part of the code, complete it and hand it over to another member of the team for review, then upload it to git, after which the code would be combined by one member and tested by each member.
 
 All three members contributed equally to all stages of the assignment.
