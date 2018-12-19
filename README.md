@@ -83,6 +83,20 @@ There is a noticeable increase in the success percentage of the Goalkeeper when 
 4. Then enter the number of test cases per scenario (preferably a larger value > 1000)
 5. View and close the graph to end the program
 
+## Member Contributions
+### Initial algorithm and code structure:
+Early ideas and program structure decided by all three team members in initial few meetings and subsequent changes were discussed in further meetings.
+
+### Code and documentation:
+Claire - Worked on coding for Scenarios 2 and 3 as well as all functions involved, doctests, visual representation of output and readme. 
+Salonee - Worked on coding for Scenarios 1, 2 and 3 as well as all functions involved, docstrings, doctests visual representation of output and doctests.
+Samuel - Worked on coding for Scenarios 1, 2 and 3 as well as all functions involved, code debugging and restructuring of overall program, dataframes, docstrings, comments, readme.
+
+Method of work:
+Each member of the team would pick up a part of the code, complete it and hand it over to another member of the team for review, then upload it to git, after which the code would be combined by one member and tested by each member.
+
+All three members contributed equally to all stages of the assignment.
+
 ## All Sources Used:
 1. https://en.wikipedia.org/wiki/Penalty_shot
 2. Refered 'Simulation of a multi-player tournament of Rock, Paper, Scissors' - J. Weible
